@@ -6,7 +6,7 @@
 class VBO {
 	GLuint id;
 public:
-	VBO(std::vector<GLfloat> &verts);
+	VBO(std::vector<GLfloat> &verts, GLenum type);
 	void unbind_vbo();
 	void delete_vbo();
 };
