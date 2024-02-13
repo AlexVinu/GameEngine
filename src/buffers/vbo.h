@@ -7,7 +7,7 @@ class VBO {
 	GLuint id;
 public:
 	VBO(std::vector<GLfloat> &verts, GLenum type);
-	VBO(const VBO&) = delete;          /*it shouldnt be copied or used with new()*/
+	VBO(const VBO&) = delete;          /*it shouldnt be copied or used with move()*/
 	VBO(VBO&&) = delete;
 
 	void unbind_vbo();
