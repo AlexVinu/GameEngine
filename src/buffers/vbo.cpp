@@ -2,13 +2,13 @@
 #include <iostream>
 
 /*idk why, but it works only with vector*/
-VBO::VBO(std::vector<GLfloat> &verts, GLenum type) {
+VBO::VBO(std::vector<GLfloat> &verts, GLenum type_of_shader) {
 	glGenBuffers(1, &id);
 	glBindBuffer(GL_ARRAY_BUFFER, id);
-	glBufferData(GL_ARRAY_BUFFER, verts.size() * sizeof(GLfloat), &verts[0], type);/*third argue must be start of array(&vector IS NOT &vector[0]*/
+	glBufferData(GL_ARRAY_BUFFER, verts.size() * sizeof(GLfloat), &verts[0], type_of_shader);   /*third argue must be start of array(&vector IS NOT &vector[0]*/
 
 	GLint succes;
-	glGetBufferParameteriv(GL_ARRAY_BUFFER, GL_BUFFER_BINDING, &succes);
+	glGetBufferParameteriv(GL_ARRAY_BUFFER, GL_BUFFER_BINDING, &succes);    /*test for correctness*/
 	if (!succes) {
 		std::cerr << "Problems in vbo\n";
 	}
