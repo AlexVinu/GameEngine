@@ -16,9 +16,9 @@ void window_Size_Callback(GLFWwindow* window, int width, int height) {
 };
 
 std::vector<float> vertices = {
-    0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,   // Нижний правый угол
-    -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,   // Нижний левый угол
-     0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f    // Верхний угол
+    0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,   // РќРёР¶РЅРёР№ РїСЂР°РІС‹Р№ СѓРіРѕР»
+    -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,   // РќРёР¶РЅРёР№ Р»РµРІС‹Р№ СѓРіРѕР»
+     0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f    // Р’РµСЂС…РЅРёР№ СѓРіРѕР»
 };
 
 const GLchar* vertexShaderSource = "#version 330 core\n"
