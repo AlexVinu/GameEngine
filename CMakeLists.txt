@@ -9,6 +9,8 @@ add_executable(${PROJECT_NAME}
 	src/buffers/vbo.cpp
 	src/shaders/Shader.h
 	src/shaders/Shader.cpp
+	src/resource_manager/ResourceManager.h
+	src/resource_manager/ResourceManager.cpp
 )
 
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)

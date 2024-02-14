@@ -69,18 +69,7 @@ int main(void)
 
     Shader vertex_shader(GL_VERTEX_SHADER, vertexShaderSource);
     Shader fragment_shader(GL_FRAGMENT_SHADER, fragmentShaderSource);
-
-    GLuint shader_program = glCreateProgram();
-    glAttachShader(shader_program, vertex_shader.give_id());
-    glAttachShader(shader_program, fragment_shader.give_id());
-    glLinkProgram(shader_program);
-    GLint success;
-    GLchar infoLog[512];
-    glGetProgramiv(shader_program, GL_LINK_STATUS, &success);
-    if (!success) {
-        glGetProgramInfoLog(shader_program, 512, NULL, infoLog);
-        std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
-    }
+    Shader shader_program(vertex_shader, fragment_shader);
     vertex_shader.delete_shader();
     fragment_shader.delete_shader();
 
@@ -109,7 +98,7 @@ int main(void)
         glClear(GL_COLOR_BUFFER_BIT);
 
         /* Render here */
-        glUseProgram(shader_program);
+        glUseProgram(shader_program.give_id());
         glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLES, 0, 3);
         glBindVertexArray(0);
