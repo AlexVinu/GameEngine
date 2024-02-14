@@ -1,12 +1,12 @@
 #pragma once
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <iostream>
 
 class Shader {
 	GLuint id;
 public:
-	Shader(GLenum type_of_shader, const GLchar* shader);
-	Shader(Shader& vertex_shader, Shader& fragment_shader);   /*constructor for shader program*/
+	Shader(GLenum type_of_shader, const std::string& shader);  
 	GLuint give_id();
-	void delete_shader();   /*only for shaders, not shader programs*/
+	void delete_shader();   
 };

@@ -5,6 +5,8 @@
 
 #include "buffers/vbo.h"
 #include "shaders/Shader.h"
+#include "shaders/Shader_Program.h"
+#include "resource_manager/ResourceManager.h"
 
 int WindowSizeX = 800;
 int WindowSizeY = 600;
@@ -22,24 +24,8 @@ std::vector<float> vertices = {
      0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f    // Верхний угол
 };
 
-const GLchar* vertexShaderSource = "#version 330 core\n"
-"layout (location = 0) in vec3 position;\n"
-"layout (location = 1) in vec3 color;\n"
-"out vec3 colors;\n "
-"void main()\n"
-"{\n"
-"gl_Position = vec4(position, 1.0f);\n"
-"colors = color;\n"
-"}\0";
-const GLchar* fragmentShaderSource = "#version 330 core\n"
-"in vec3 colors;\n"
-"out vec4 color;\n"
-"void main()\n"
-"{\n"
-"color = vec4(colors, 1.0f);\n"
-"}\n\0";
 
-int main(void)
+int main(int argc, char* argv[])
 {
     GLFWwindow* window;
 
@@ -67,11 +53,8 @@ int main(void)
     }
     glfwSetWindowSizeCallback(window, window_Size_Callback);
 
-    Shader vertex_shader(GL_VERTEX_SHADER, vertexShaderSource);
-    Shader fragment_shader(GL_FRAGMENT_SHADER, fragmentShaderSource);
-    Shader shader_program(vertex_shader, fragment_shader);
-    vertex_shader.delete_shader();
-    fragment_shader.delete_shader();
+    ResourceManager res(argv[0]);
+    auto shader_program = res.make_shader_program("first", "res/shaders/first_vertex_shader.txt", "res/shaders/first_fragment_shader.txt");
 
     GLuint VAO;
     glGenVertexArrays(1, &VAO);
@@ -98,7 +81,7 @@ int main(void)
         glClear(GL_COLOR_BUFFER_BIT);
 
         /* Render here */
-        glUseProgram(shader_program.give_id());
+        glUseProgram(shader_program->give_id());
         glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLES, 0, 3);
         glBindVertexArray(0);
