@@ -22,7 +22,7 @@ std::shared_ptr<Shader_Program> ResourceManager::make_shader_program(std::string
 {
 	std::string vertex_shader_src = get_file_string(vertex_shader_rel_path);
 	std::string fragment_shader_src = get_file_string(fragment_shader_rel_path);
-	auto& shader_program = std::make_shared<Shader_Program>(Shader(GL_VERTEX_SHADER, vertex_shader_src), Shader(GL_FRAGMENT_SHADER, fragment_shader_src));
+	auto& shader_program = std::make_shared<Shader_Program> (vertex_shader_src, fragment_shader_src);
 	shaderMap.emplace(name, shader_program);
 	return shader_program;
 };

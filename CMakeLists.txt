@@ -7,8 +7,6 @@ add_executable(${PROJECT_NAME}
 	src/main.cpp
 	src/buffers/vbo.h
 	src/buffers/vbo.cpp
-	src/shaders/Shader.h
-	src/shaders/Shader.cpp
 	src/shaders/Shader_program.h
 	src/shaders/Shader_program.cpp
 	src/resource_manager/ResourceManager.h
