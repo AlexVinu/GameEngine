@@ -4,7 +4,6 @@
 #include <vector>
 
 #include "buffers/vbo.h"
-#include "shaders/Shader.h"
 #include "shaders/Shader_Program.h"
 #include "resource_manager/ResourceManager.h"
 

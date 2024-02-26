@@ -6,7 +6,6 @@
 #include <map>
 #include<memory>
 #include<iostream>
-#include "../shaders/Shader.h"
 #include "../shaders/Shader_Program.h"
 
 class ResourceManager {
