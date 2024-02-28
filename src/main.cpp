@@ -5,7 +5,11 @@
 
 #include "buffers/vbo.h"
 #include "shaders/Shader_Program.h"
+#include "TextureProgram/Texture_Program.h"
 #include "resource_manager/ResourceManager.h"
+
+#define STB_IMAGE_IMPLEMENTATION
+#include "C:/OpenGL/GameEngine/res/stb_image.h"
 
 int WindowSizeX = 800;
 int WindowSizeY = 600;
@@ -18,11 +22,10 @@ void window_Size_Callback(GLFWwindow* window, int width, int height) {
 };
 
 std::vector<float> vertices = {
-    0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,   // Нижний правый угол
-    -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,   // Нижний левый угол
-     0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f    // Верхний угол
+    0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,   1.0, 0.0,  // Нижний правый угол
+    -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,  0.0, 0.0,   // Нижний левый угол
+     0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f,  0.5, 1.0    // Верхний угол
 };
-
 
 int main(int argc, char* argv[])
 {
@@ -55,16 +58,21 @@ int main(int argc, char* argv[])
     ResourceManager res(argv[0]);
     auto shader_program = res.make_shader_program("first", "res/shaders/first_vertex_shader.txt", "res/shaders/first_fragment_shader.txt");
 
+    auto texture = res.make_texture_program("first", "res/textures/brick.png");
+
     GLuint VAO;
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
     VBO vbo(vertices, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)0);
     glEnableVertexAttribArray(0);
 
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)(3*sizeof(GLfloat)));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(3*sizeof(GLfloat)));
     glEnableVertexAttribArray(1);
+
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(6 * sizeof(GLfloat)));
+    glEnableVertexAttribArray(2);
 
     vbo.unbind_vbo();
     glBindVertexArray(0);
@@ -81,6 +89,11 @@ int main(int argc, char* argv[])
 
         /* Render here */
         glUseProgram(shader_program->give_id());
+
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, texture->give_id());
+        shader_program->set_uniform("ourTexture", 0);
+
         glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLES, 0, 3);
         glBindVertexArray(0);

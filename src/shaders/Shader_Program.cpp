@@ -1,5 +1,6 @@
 #include"Shader_Program.h"
 
+/*constructor for a single shader*/
 Shader_Program::Shader::Shader(GLenum type_of_shader, const std::string& shader) {
     const GLchar* shader_char = shader.c_str();
     id = glCreateShader(type_of_shader);
@@ -17,7 +18,12 @@ Shader_Program::Shader::Shader(GLenum type_of_shader, const std::string& shader)
 };
 
 GLuint Shader_Program::Shader::give_id() {
-    return id;
+    return this->id;
+}
+
+void Shader_Program::Shader_Program::set_uniform(const GLchar* name_uniform, GLuint num_of_type)
+{
+    glUniform1i(glGetUniformLocation(id, name_uniform), num_of_type);
 }
 
 void Shader_Program::Shader::delete_shader() {
@@ -25,6 +31,7 @@ void Shader_Program::Shader::delete_shader() {
     id = 0;
 }
 
+/*constructor for shader program*/
 Shader_Program::Shader_Program(const std::string& vertex_shader_str, const std::string& fragment_shader_str)  
 {
     Shader vertex_shader (GL_VERTEX_SHADER, vertex_shader_str);
@@ -48,5 +55,5 @@ Shader_Program::Shader_Program(const std::string& vertex_shader_str, const std::
 
 GLuint Shader_Program::give_id()
 {
-    return id;
+    return this->id;
 };

@@ -20,10 +20,29 @@ std::string ResourceManager::get_file_string(const std::string& file_rel_path) {
 
 std::shared_ptr<Shader_Program> ResourceManager::make_shader_program(std::string name, const std::string& vertex_shader_rel_path, const std::string& fragment_shader_rel_path)
 {
+	/*Getting shaders*/
 	std::string vertex_shader_src = get_file_string(vertex_shader_rel_path);
 	std::string fragment_shader_src = get_file_string(fragment_shader_rel_path);
-	auto& shader_program = std::make_shared<Shader_Program> (vertex_shader_src, fragment_shader_src);
-	shaderMap.emplace(name, shader_program);
+	/*---------------*/
+
+	std::shared_ptr<Shader_Program>& shader_program = std::make_shared<Shader_Program>(vertex_shader_src, fragment_shader_src);
+	shaderMap.emplace(name, shader_program);   /*inserts shader_program into shaderMap*/
 	return shader_program;
+};
+
+std::shared_ptr<Texture> ResourceManager::make_texture_program(std::string name, const std::string& texture_rel_path)
+{
+	std::string full_path = relPath + "/" + texture_rel_path;
+	int width, height, channels;
+	unsigned char* image = stbi_load(full_path.c_str(), &width, &height, &channels, 0);
+
+	if (!image) {
+		std::cerr << "image didnt loaded, name:: " << name << std::endl;
+	}
+
+	std::shared_ptr<Texture>& texture_program = std::make_shared<Texture>(image, std::move(width), std::move(height), std::move(channels));
+	stbi_image_free(image);
+	textureMap.emplace(name, texture_program);
+	return texture_program;
 };
 
