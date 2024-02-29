@@ -1,11 +1,14 @@
 #include "Texture_Program.h"
 
-Texture::Texture(unsigned char* image, int width, int height, int channels)
+Texture::Texture(unsigned char* image, const int&& width, const int&& height, const int&& channels)
 {
+	/*Its logically clearer to put this variables into class object*/
 	this->image = image;
 	this->width = width;
 	this->height = height;
 	this->channels = channels;
+	/*-----------------------------*/
+
 	glGenTextures(1, &id);
 	glBindTexture(GL_TEXTURE_2D, id);
 
@@ -18,7 +21,6 @@ Texture::Texture(unsigned char* image, int width, int height, int channels)
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, this->width, this->height, 0, GL_RGBA, GL_UNSIGNED_BYTE, this->image);
 	glGenerateMipmap(GL_TEXTURE_2D);
 
-	image = NULL;
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 

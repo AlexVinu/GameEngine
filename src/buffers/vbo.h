@@ -6,7 +6,7 @@
 class VBO {
 	GLuint id;
 public:
-	VBO(std::vector<GLfloat> &verts, GLenum type_of_shader);
+	VBO(std::vector<GLfloat> &verts, GLenum type_of_shader); /*init object*/
 	void unbind_vbo();
 	void delete_vbo();
 };

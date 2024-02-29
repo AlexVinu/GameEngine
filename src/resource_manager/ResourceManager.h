@@ -23,7 +23,12 @@ class ResourceManager {
 	typedef std::map<std::string, std::shared_ptr<Texture>> TextureMap;
 	TextureMap textureMap; /*there are textures in it*/
 public:
-	ResourceManager(const std::string& main_path);
+	ResourceManager(const std::string& main_path); /*init class*/
 	std::shared_ptr<Shader_Program> make_shader_program(std::string name, const std::string& vertex_shader_rel_path, const std::string& fragment_shader_rel_path); /*returns Shader_program, it exists in its own variable and in special map*/
 	std::shared_ptr<Texture> make_texture_program(std::string name, const std::string& texture_rel_path);   /*returns texture_program, it exists in its own variable and in special map*/
+
+	/*deleting move or copy constructors*/
+	ResourceManager(const ResourceManager& obj) = delete; 
+	ResourceManager(const ResourceManager&& obj) = delete;
+	/*---------------------------------------*/
 };

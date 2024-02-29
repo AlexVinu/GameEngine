@@ -24,7 +24,7 @@ void window_Size_Callback(GLFWwindow* window, int width, int height) {
 std::vector<float> vertices = {
     0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,   1.0, 0.0,  // Нижний правый угол
     -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,  0.0, 0.0,   // Нижний левый угол
-     0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f,  0.5, 1.0    // Верхний угол
+     0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f,  0.5, 1.0    // Верхний угол 1
 };
 
 int main(int argc, char* argv[])
@@ -55,10 +55,12 @@ int main(int argc, char* argv[])
     }
     glfwSetWindowSizeCallback(window, window_Size_Callback);
 
-    ResourceManager res(argv[0]);
+    ResourceManager res(argv[0]); /*argv[0] returns path to exe file(need it for resource manager)*/
+
     auto shader_program = res.make_shader_program("first", "res/shaders/first_vertex_shader.txt", "res/shaders/first_fragment_shader.txt");
 
-    auto texture = res.make_texture_program("first", "res/textures/brick.png");
+    auto texture_first = res.make_texture_program("first", "res/textures/brick.png");
+    auto texture_second = res.make_texture_program("second", "res/textures/container2.png");
 
     GLuint VAO;
     glGenVertexArrays(1, &VAO);
@@ -91,8 +93,11 @@ int main(int argc, char* argv[])
         glUseProgram(shader_program->give_id());
 
         glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, texture->give_id());
-        shader_program->set_uniform("ourTexture", 0);
+        glBindTexture(GL_TEXTURE_2D, texture_first->give_id());
+        shader_program->set_uniform("ourTexture1", 0);
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, texture_second->give_id());
+        shader_program->set_uniform("ourTexture2", 1);
 
         glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLES, 0, 3);
