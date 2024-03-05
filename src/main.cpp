@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "buffers/vbo.h"
+#include "buffers/ebo.h"
 #include "shaders/Shader_Program.h"
 #include "TextureProgram/Texture_Program.h"
 #include "resource_manager/ResourceManager.h"
@@ -22,9 +23,15 @@ void window_Size_Callback(GLFWwindow* window, int width, int height) {
 };
 
 std::vector<float> vertices = {
-    0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,   1.0, 0.0,  // Нижний правый угол
-    -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,  0.0, 0.0,   // Нижний левый угол
-     0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f,  0.5, 1.0    // Верхний угол 1
+    0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // Top Right
+    0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // Bottom Right
+    -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // Bottom Left
+    -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // Top Left 
+};
+
+std::vector<GLuint> indices = {  // Note that we start from 0!
+        0, 1, 3, // First Triangle
+        1, 2, 3  // Second Triangle
 };
 
 int main(int argc, char* argv[])
@@ -66,6 +73,7 @@ int main(int argc, char* argv[])
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
     VBO vbo(vertices, GL_STATIC_DRAW);
+    EBO ebo(indices, GL_STATIC_DRAW);
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)0);
     glEnableVertexAttribArray(0);
@@ -76,8 +84,9 @@ int main(int argc, char* argv[])
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(6 * sizeof(GLfloat)));
     glEnableVertexAttribArray(2);
 
-    vbo.unbind_vbo();
     glBindVertexArray(0);
+    vbo.unbind_buffer();
+    ebo.unbind_buffer();
 
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
@@ -100,7 +109,7 @@ int main(int argc, char* argv[])
         shader_program->set_uniform("ourTexture2", 1);
 
         glBindVertexArray(VAO);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
 
         /* Swap front and back buffers */
@@ -108,7 +117,8 @@ int main(int argc, char* argv[])
     }
 
     glDeleteVertexArrays(1, &VAO);
-    vbo.delete_vbo();
+    ebo.delete_buffer();
+    vbo.delete_buffer();
 
     glfwTerminate();
     return 0;

@@ -1,6 +1,6 @@
 #include "Texture_Program.h"
 
-Texture::Texture(unsigned char* image, const int&& width, const int&& height, const int&& channels)
+Texture::Texture(unsigned char* image, const int& width, const int& height, const int& channels)
 {
 	/*Its logically clearer to put this variables into class object*/
 	this->image = image;

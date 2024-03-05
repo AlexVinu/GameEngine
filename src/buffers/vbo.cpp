@@ -1,5 +1,4 @@
 #include "vbo.h"
-#include <iostream>
 
 /*init object, verticies must be in vector, idk why, but otherwise its not working*/
 VBO::VBO(std::vector<GLfloat> &verts, GLenum type_of_shader) {
@@ -15,12 +14,12 @@ VBO::VBO(std::vector<GLfloat> &verts, GLenum type_of_shader) {
 	}
 	/*-------------------*/
 };
-void VBO::unbind_vbo() {
+void VBO::unbind_buffer() const {
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	std::cerr << "unbind vbo " << id << std::endl;
 	return;
 };
-void VBO::delete_vbo() {
+void VBO::delete_buffer() const {
 	glDeleteBuffers(1, &id);
 	return;
 };

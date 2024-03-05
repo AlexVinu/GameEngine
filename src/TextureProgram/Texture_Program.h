@@ -13,6 +13,6 @@ class Texture {
 	/*-------------------------*/
 public:
 	unsigned char* image;
-	Texture(unsigned char* image, const int&& width, const int&& height, const int&& channels);   /*init object with variables, using rvalue refs (its logically clearer to put this variables into class object)*/
+	Texture(unsigned char* image, const int& width, const int& height, const int& channels);   /*init object with variables, using rvalue refs (its logically clearer to put this variables into class object)*/
 	GLuint give_id();
 };

@@ -1,4 +1,5 @@
-#include"ResourceManager.h"
+#include "ResourceManager.h"
+
 
 /*init res object, put full path to exe file into variable*/
 ResourceManager::ResourceManager(const std::string& main_path) {
@@ -48,7 +49,7 @@ std::shared_ptr<Texture> ResourceManager::make_texture_program(std::string name,
 	}
 	/*---------------------------*/
 
-	std::shared_ptr<Texture>& texture_program = std::make_shared<Texture>(image, std::move(width), std::move(height), std::move(channels));
+	std::shared_ptr<Texture>& texture_program = std::make_shared<Texture>(image, width, height, channels);
 	stbi_image_free(image); /*deleting image*/
 	textureMap.emplace(name, texture_program); /*inserts texture into textureMap*/
 	return texture_program;
